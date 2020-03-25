@@ -59,6 +59,7 @@ namespace EasyOCR
         }
 
         bool appendMode = false;        //追加模式
+        bool toClipboard = true;        //输出至剪切板
 
         public class DLL
         {
@@ -71,6 +72,15 @@ namespace EasyOCR
             this.label2.Text = mess;
             this.label2.ForeColor = color;
         }
+
+        private void CopyClipboard()
+        {
+            if (toClipboard)
+            {
+                Clipboard.SetText(this.textBox1.Text);
+            }
+        }
+
         private void ScreenCapture()
         {
             if (!appendMode)
@@ -95,6 +105,7 @@ namespace EasyOCR
                                 this.textBox1.AppendText(line + Environment.NewLine);
                             }
                             message("转换完成", Color.Green);
+                            CopyClipboard();
                         }
                         catch (Exception err)
                         {
@@ -172,6 +183,7 @@ namespace EasyOCR
 
             }
             message("转换完成", Color.Green);
+            CopyClipboard();
         }
         
         private void textBox1_DragEnter(object sender, DragEventArgs e)
@@ -278,6 +290,20 @@ namespace EasyOCR
         private void textBox1_MouseClick(object sender, MouseEventArgs e)
         {
             message("拖动图片(jpg、png、bmp)至输入框以识别文字，支持批量处理", Color.Green);
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (this.checkBox1.Checked)
+            {
+                toClipboard = true;
+                message("复制结果到剪切板", Color.Green);
+            }
+            else
+            {
+                toClipboard = false;
+                message("取消复制结果到剪切板", Color.Green);
+            }
         }
     }
 }
