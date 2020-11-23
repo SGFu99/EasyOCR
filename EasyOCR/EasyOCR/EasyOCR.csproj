@@ -103,7 +103,7 @@
   <ItemGroup>
     <Content Include="logo.ico" />
     <Content Include="Newtonsoft.Json.dll" />
-    <Content Include="Snapshot.dll" />
+    <None Include="Resources\Snapshot.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
