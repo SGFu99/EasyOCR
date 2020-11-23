@@ -50,9 +50,9 @@ namespace EasyOCR
                     snapdll.Write(Properties.Resources.Snapshot, 0, Properties.Resources.Snapshot.Length);
                     snapdll.Close();
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
-                    MessageBox.Show("释放截图资源文件出错，第一次请以管理员权限运行\n" + e.ToString());
+                    MessageBox.Show("释放截图资源文件出错，第一次请以管理员权限运行。");
                 }
             }
         }
@@ -66,7 +66,7 @@ namespace EasyOCR
             public static extern int PrScrn(); //截图方法
         }
 
-        private void message(string mess ,Color color)
+        private void message(string mess, Color color)
         {
             this.label2.Text = mess;
             this.label2.ForeColor = color;
@@ -93,7 +93,7 @@ namespace EasyOCR
             {
                 this.textBox1.Text = "";
             }
-            if (DLL.PrScrn()==1)
+            if (DLL.PrScrn() == 1)
             {
                 if (Clipboard.ContainsImage())
                 {
@@ -113,11 +113,11 @@ namespace EasyOCR
                             message("转换完成", Color.Green);
                             CopyClipboard();
                         }
-                        catch (Exception err)
+                        catch (Exception)
                         {
-                            MessageBox.Show("处理截图文件流失败" + err.ToString());
+                            MessageBox.Show("处理截图文件流失败，文件格式错误或今日API次数耗尽。");
                         }
-                        
+
                     }
                     else
                     {
@@ -164,7 +164,7 @@ namespace EasyOCR
             {
                 List<string> tempResult;
                 string curFilePath = aryFiles.GetValue(i).ToString();
-                string curFileName= Path.GetFileName(curFilePath);
+                string curFileName = Path.GetFileName(curFilePath);
                 string extension = Path.GetExtension(curFilePath).ToLower();
                 //message("正在处理 " + curFileName+ '\t' + (i + 1).ToString() + '/' + aryFiles.Length.ToString(), Color.Green);
                 if (extension == ".jpg" || extension == ".png" || extension == ".bmp")
@@ -182,22 +182,22 @@ namespace EasyOCR
                             this.textBox1.AppendText(line + Environment.NewLine);
                         }
                     }
-                    catch (Exception err)
+                    catch (Exception)
                     {
-                        MessageBox.Show("处理图片失败\n" + err.ToString());
+                        MessageBox.Show("处理图片失败，文件格式错误或今日API次数耗尽。");
                     }
                 }
                 else
                 {
                     this.textBox1.AppendText("[" + (i + 1).ToString() + "] " + curFileName + "：" + "格式不支持！" + Environment.NewLine);
                 }
-                this.textBox1.AppendText( Environment.NewLine + Environment.NewLine);
+                this.textBox1.AppendText(Environment.NewLine + Environment.NewLine);
 
             }
             message("转换完成", Color.Green);
             CopyClipboard();
         }
-        
+
         private void textBox1_DragEnter(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
@@ -243,7 +243,7 @@ namespace EasyOCR
         {
 
             this.comboBox1.SelectedIndex = 0;
-            hotkey = new Hotkey(this.Handle); 
+            hotkey = new Hotkey(this.Handle);
             try
             {
                 Hotkey.Hotkey1 = hotkey.RegisterHotkey(Keys.A, Hotkey.KeyFlags.MOD_ALT); //定义快键(Alt + A)
