@@ -49,7 +49,8 @@ namespace EasyOCR
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(host);
             request.Method = "post";
             request.KeepAlive = true;
-            // 图片的base64编码
+
+            // 获取图片的base64编码
             string base64 = getFileBase64(fileName);
             String str = "image=" + HttpUtility.UrlEncode(base64);
             byte[] buffer = encoding.GetBytes(str);
@@ -58,6 +59,7 @@ namespace EasyOCR
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
             string jsonText = reader.ReadToEnd();
+
             //解析json字符串，提取结果
             JsonReader jsreader = new JsonTextReader(new StringReader(jsonText));
             while (jsreader.Read())
@@ -76,11 +78,12 @@ namespace EasyOCR
         {
             List<string> result = new List<string>();
             string token = this.AccessToken;
-            string host = "https://aip.baidubce.com/rest/2.0/ocr/v1/accurate_basic?access_token=" + this.AccessToken + "&language_type=" + this.language;
+            string host = "https://aip.baidubce.com/rest/2.0/ocr/v1/general_basic?access_token=" + this.AccessToken + "&language_type=" + this.language;
             Encoding encoding = Encoding.Default;
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(host);
             request.Method = "post";
             request.KeepAlive = true;
+
             // 图片的base64编码
             string base64 = getStreamBase64(stream);
             String str = "image=" + HttpUtility.UrlEncode(base64);
@@ -90,6 +93,7 @@ namespace EasyOCR
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
             string jsonText = reader.ReadToEnd();
+
             //解析json字符串，提取结果
             JsonReader jsreader = new JsonTextReader(new StringReader(jsonText));
             while (jsreader.Read())

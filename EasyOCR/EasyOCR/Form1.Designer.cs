@@ -75,17 +75,7 @@
             resources.GetString("comboBox1.Items6"),
             resources.GetString("comboBox1.Items7"),
             resources.GetString("comboBox1.Items8"),
-            resources.GetString("comboBox1.Items9"),
-            resources.GetString("comboBox1.Items10"),
-            resources.GetString("comboBox1.Items11"),
-            resources.GetString("comboBox1.Items12"),
-            resources.GetString("comboBox1.Items13"),
-            resources.GetString("comboBox1.Items14"),
-            resources.GetString("comboBox1.Items15"),
-            resources.GetString("comboBox1.Items16"),
-            resources.GetString("comboBox1.Items17"),
-            resources.GetString("comboBox1.Items18"),
-            resources.GetString("comboBox1.Items19")});
+            resources.GetString("comboBox1.Items9")});
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             this.comboBox1.MouseEnter += new System.EventHandler(this.comboBox1_MouseEnter);

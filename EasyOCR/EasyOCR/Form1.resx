@@ -241,36 +241,6 @@ Alt + A</value>
   <data name="comboBox1.Items9" xml:space="preserve">
     <value>俄语</value>
   </data>
-  <data name="comboBox1.Items10" xml:space="preserve">
-    <value>丹麦语</value>
-  </data>
-  <data name="comboBox1.Items11" xml:space="preserve">
-    <value>荷兰语</value>
-  </data>
-  <data name="comboBox1.Items12" xml:space="preserve">
-    <value>马来语</value>
-  </data>
-  <data name="comboBox1.Items13" xml:space="preserve">
-    <value>瑞典语</value>
-  </data>
-  <data name="comboBox1.Items14" xml:space="preserve">
-    <value>印尼语</value>
-  </data>
-  <data name="comboBox1.Items15" xml:space="preserve">
-    <value>波兰语</value>
-  </data>
-  <data name="comboBox1.Items16" xml:space="preserve">
-    <value>罗马尼亚语</value>
-  </data>
-  <data name="comboBox1.Items17" xml:space="preserve">
-    <value>土耳其语</value>
-  </data>
-  <data name="comboBox1.Items18" xml:space="preserve">
-    <value>希腊语</value>
-  </data>
-  <data name="comboBox1.Items19" xml:space="preserve">
-    <value>匈牙利语</value>
-  </data>
   <data name="comboBox1.Location" type="System.Drawing.Point, System.Drawing">
     <value>100, 545</value>
   </data>

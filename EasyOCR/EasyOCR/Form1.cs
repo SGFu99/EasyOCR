@@ -12,6 +12,7 @@ namespace EasyOCR
     public partial class Form1 : Form
     {
         OcrTools ocrTools;
+        bool ocr_init_flag = false;
 
         //Resources.resx文件中dll引用路径处理
         System.Reflection.Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
@@ -32,8 +33,6 @@ namespace EasyOCR
 
             releaseRes();
 
-            //初始化OCR
-            this.ocrTools = new OcrTools();
         }
 
         private void releaseRes()
@@ -53,7 +52,7 @@ namespace EasyOCR
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show("释放资源出错，请尝试以管理员权限运行\n" + e.ToString());
+                    MessageBox.Show("释放截图资源文件出错，第一次请以管理员权限运行\n" + e.ToString());
                 }
             }
         }
@@ -83,6 +82,13 @@ namespace EasyOCR
 
         private void ScreenCapture()
         {
+            //ocr初始失败，仅截图
+            if (!ocr_init_flag)
+            {
+                DLL.PrScrn();
+                return;
+            }
+
             if (!appendMode)
             {
                 this.textBox1.Text = "";
@@ -137,6 +143,12 @@ namespace EasyOCR
 
         private void textBox1_DragDrop(object sender, DragEventArgs e)
         {
+            //ocr初始失败，不处理图片转文字请求
+            if (!ocr_init_flag)
+            {
+                return;
+            }
+
             //处理拖动文件
             Array aryFiles = ((System.Array)e.Data.GetData(DataFormats.FileDrop));
             if (!appendMode)
@@ -196,32 +208,25 @@ namespace EasyOCR
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Dictionary<string, string> items = new Dictionary<string, string> {
-                {"中英文混合", "CHN_ENG"},
-                {"英文", "ENG"},
-                {"日语", "JAP"},
-                {"韩语", "KOR"},
-                {"法语", "FRE"},
-                {"西班牙语", "SPA"},
-                {"葡萄牙语", "POR"},
-                {"德语", "GER"},
-                {"意大利语", "ITA"},
-                {"俄语", "RUS"},
-                {"丹麦语", "DAN"},
-                {"荷兰语", "DUT"},
-                {"马来语", "MAL"},
-                {"瑞典语", "SWE"},
-                {"印尼语", "IND"},
-                {"波兰语", "POL"},
-                {"罗马尼亚语", "ROM"},
-                {"土耳其语", "TUR"},
-                {"希腊语", "GRE"},
-                {"匈牙利语", "HUN"}
-            };
+            if (ocr_init_flag)
+            {
+                Dictionary<string, string> items = new Dictionary<string, string> {
+                    {"中英文混合", "CHN_ENG"},
+                    {"英文", "ENG"},
+                    {"日语", "JAP"},
+                    {"韩语", "KOR"},
+                    {"法语", "FRE"},
+                    {"西班牙语", "SPA"},
+                    {"葡萄牙语", "POR"},
+                    {"德语", "GER"},
+                    {"意大利语", "ITA"},
+                    {"俄语", "RUS"}
+                 };
 
-            string langyage_key = this.comboBox1.SelectedItem.ToString();
-            this.ocrTools.language = items[langyage_key].ToString();
-            message("成功设置识别语言为 " + langyage_key, Color.Green);
+                string langyage_key = this.comboBox1.SelectedItem.ToString();
+                this.ocrTools.language = items[langyage_key].ToString();
+                message("设置识别语言为 " + langyage_key, Color.Green);
+            }
         }
 
         public void OnHotkey(int HotkeyID) //设置热键的行为
@@ -248,6 +253,18 @@ namespace EasyOCR
             {
                 MessageBox.Show("绑定全局热键失败：Alt + A 热键被占用");
             }
+
+            try
+            {
+                //初始化OCR
+                this.ocrTools = new OcrTools();
+                ocr_init_flag = true;
+            }
+            catch (Exception)
+            {
+                message("初始OCR接口失败，将以离线模式运行，仅支持截图功能", Color.Red);
+            }
+
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
